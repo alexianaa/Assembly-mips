@@ -1,0 +1,33 @@
+.data
+
+.text
+main:
+
+li $v0, 5 
+syscall 
+move $s0,$v0 # guarda nota em $t0
+li $a0,65 # nota A
+
+# se nota <86 muda pra B
+slti $t0,$s0,86 
+add  $a0,$a0,$t0
+
+# se nota <61 muda pra C
+slti $t0,$s0,61 
+add  $a0,$a0,$t0
+
+# se nota <36 muda pra D
+slti $t0,$s0,36 
+add  $a0,$a0,$t0
+
+# se nota <1 muda pra E
+slti $t0,$s0,1 
+add  $a0,$a0,$t0
+
+# imprime string
+li $v0, 11
+syscall
+
+# encerra programa
+li $v0,10
+syscall
