@@ -1,0 +1,33 @@
+.data
+
+.text
+main:
+
+li $v0,5 # le numero de entradas
+syscall
+
+move $t0,$v0 # $t0 = nument
+li $t1,1   # $t1 = contnument (1)
+
+li $v0,5 # le primeira entrada
+syscall
+move $t2,$v0 #t2 = maior num (primeiro num)
+
+loopent:
+beq $t1,$t0,exit # contnument == nument? se sim -> exit
+addi $t1,$t1,1 # contnument++
+li $v0,5
+syscall
+move $t4,$v0
+bgt $t4,$t2,verdade # novonum > maiornum?
+j loopent
+verdade:
+move $t2,$t4 # maiornum = novonum
+j loopent
+
+exit:
+move $a0,$t2 # printa maior numero
+li $v0,1
+syscall
+li $v0,10 # encerra programa
+syscall

@@ -96,19 +96,20 @@ Saída:
 
 A saída é composta pela pirâmide de asteriscos.
 
-Exemplo
-Entrada
-8
-Saída
-       *
-      ***
-     *****
-    ******* ...
 </details>
 
 ## F: Maior numero
 <details>
-<summary>em breve</summary>
+<summary>maiornumero.spim</summary>
+O objetivo neste exercício é simples: você deve ler n números e determinar o maior entre eles.
+
+Entrada:
+
+A entrada é composta por diversas linhas. A primeira linha contém um inteiro n (1 \leq n \leq 10^5). As n linhas seguintes contém cada uma um inteiro.
+
+Saída:
+
+A saída é composta por uma única linha contendo o maior dos n números lidos.
 </details>
 
 ## G: Bit de paridade
