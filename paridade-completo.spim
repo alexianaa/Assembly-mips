@@ -1,0 +1,66 @@
+
+.data
+.text
+main:
+# $s0 = num ent
+# $s1 = bit de paridade
+# $s2 = numero decimal do binario de 8 bits
+
+li $v0,5
+syscall
+move $a0,$v0 
+jal	bitparidade				# jump tobitparidade and save position to $ra
+move $s1,$v0
+move $s2,$v1
+
+move $a0,$s1
+li $v0,1
+syscall
+
+li $a0,10
+li $v0,11
+syscall
+
+move $a0,$s2
+li $v0,1
+syscall
+
+li $v0,10
+syscall
+
+bitparidade:
+# a0 - num lido
+li $t0,0 # t0 - contador de bits ( 0 - 7 )
+li $t1,1 # t1 - mascara de bit 1
+li $t2,0 # t2 - contador de bits 1
+li $t3,0 # t3 - bit retornado do and
+move $t4,$a0 # t4 - salvar o num para dar srl
+
+loop:
+beq $t0,8,par
+addi $t0,$t0,1
+and $t3,$t4,$t1
+srl $t4,$t4,1
+beq $t3,1,verdade
+j loop
+verdade:
+addi $t2,$t2,1
+j loop
+
+par:
+li $t5,2
+div $t2,$t5     # divisao do numero de bits 1 por 2
+mfhi $t6        # t6 - resto da divisao
+beq $t6,1,impar # se for impar o bit de paridade é 1
+li $v0,0
+j naoSoma        # se for par o bit de paridade é 0
+impar:
+li $v0,1        # bit de paridade e armazenado em v0
+
+naoSoma:
+beq $v0,1,soma  # se o bit de paridade e igual a 1 soma
+move $v1,$a0    # se nao v1 ja e o numero dado
+jr $ra          # jump to $ra 
+soma:
+addi $v1,$a0,128
+jr $ra

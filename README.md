@@ -114,5 +114,16 @@ A saída é composta por uma única linha contendo o maior dos n números lidos.
 
 ## G: Bit de paridade
 <details>
-<summary>em breve</summary>
+<summary>paridade.spim</summary>
+Um bit de paridade, ou um bit de conferência, é um bit adicionado a uma string de um código binário de forma que a string composta possua um número total de bits 1 par (paridade par) ou ímpar (paridade ímpar). Bits de paridade são uma das formas mais simples de códigos de detecção de erro e foram utilizados nos primórdios da Internet na proteção dos dados transmitidos pelos modems, dados que trafegavam em links de comunicação seriais, geralmente providos pelo par trançado das linhas telefônicas.
+
+Há duas variantes para o cálculo de bits de paridade: a paridade par e a paridade ímpar. No caso da paridade par, para um conjunto de bits, as ocorrências dos bits cujo valor é 1 são contadas. Se a contagem total resultar em um número ímpar, o bit de paridade é ajustado para 1, fazendo com que a quantidade de ocorrências de 1 no conjunto (incluindo o bit de paridade) seja um número par. Se a contagem de 1s em determinado conjunto de bits já for par, o bit de paridade é ajustado para 0.
+
+O bit de paridade pode ser colocado na posição mais significativa da palavra resultante.
+
+Sua tarefa é implementar um procedimento que receba em $a0 um número menor que 128 e processe o número lido calculando o valor de bit necessário à ser adicionado para que a quantidade de bits 1 seja um número par. O seu procedimento deve retornar o bit de paridade em $v0 e o número resultante em $v1. Veja exemplos abaixo.
+
+ATENÇÃO: você deve enviar apenas o código referente ao procedimento bitparidade, sem enviar as declarações de .text e .data.
+
+- no arquivo paridade-completo.spim há o codigo com .data e .text para ser executado, e no aquivo paridade.spim há somente o procedimento
 </details>
