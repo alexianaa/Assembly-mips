@@ -1,21 +1,49 @@
-# 1 -> 3 -> 5 -> 7 -> 9 -> 11 -> 13 -> 15
 .data
+
 .text
 main:
 
 li $v0, 5 # guarda num em $t0
 syscall 
-move $t0,$v0 
+move $t0,$v0 # $t0 - num de linhas                         ( num        ) 
+li $t1,0     # $t1 - contador de num de linhas concluidas  ( contnumlin )
+move $t2,$t0 # $t2 - num de espacos                        ( numesp     )
+li $t3,1     # $t3 - contador de num de espacos concluidos ( contnumesp )
+li $t4,1     # $t4 - num de asteriscos                     ( numast     )
+li $t5,0     # $t5 - contador de num de ast concluidos     ( contnumast )
 
-loopesp:
-la $a0,' '
-li $v0,11
-syscall
+looplinhas:
+beq $t1,$t0,exit # condicao de saida: contnumlin = numlinhas
 
-loopast: 
-la $a0,'*' # print *
-li $v0,11
-syscall
+    loopesp:
+    beq $t3,$t2,loopast  # if contnumesp == numesp -> print ast
+    li $a0,32           # if not, print esp
+    li $v0,11
+    syscall
+    addi $t3,$t3,1       # contnumesp++
+    j loopesp            # volta pro loop
 
+    loopast:
+    beq $t4,$t5,printlin # if contnumast == numast -> print quebra de linha
+    li $a0,42          # if not, print ast
+    li $v0,11            
+    syscall
+    addi $t5,$t5,1       # contnumast++
+    j loopast            # volta pro loop
+
+    printlin:
+    li $t3,1        # contnumesp = 1
+    li $t5,0        # contnumast = 0
+    addi $t2,$t2,-1 # numesp -- 
+    addi $t4,$t4,2  # numast += 2
+    li $a0,10       # print quebra de linha
+    li $v0,11
+    syscall
+
+addi $t1,$t1,1
+j looplinhas # proxima linha
+
+exit:       
 li $v0,10 # encerra programa
 syscall
+    
