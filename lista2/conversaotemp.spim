@@ -1,0 +1,70 @@
+.data
+# t0 = temp atual
+caracter: .space 1
+doissetetres: .float 273.15
+umoito: .float 1.8
+tresdois: .float 32.0
+.text
+main:
+la $a0,caracter
+li $v0,8
+syscall
+lbu $t3,($a0)
+
+li $t0,'K'
+li $t1,'C'
+li $t2,'F'
+
+mtc1 $zero,$f3 #temperatura nova 
+beq $t3,$t1,celcius
+beq $t3,$t0,kelvin
+beq $t3,$t2,fahrenheit
+
+celcius:
+la $a0,caracter
+li $v0,8
+syscall
+lbu $t4,($a0)
+
+li $t0,'K'
+li $t1,'F'
+
+li $v0,6
+syscall
+#f0 = temp atual
+
+beq $t4,$t0,celciuskelvin
+beq $t4,$t1,celciusfahrenheit
+
+celciuskelvin:
+lwc1 $f6,doissetetres
+add.s $f3,$f0,$f6
+j out
+
+celciusfahrenheit:
+lwc1 $f6,tresdois
+lwc1 $f7,umoito
+mul.s $f3,$f0,$f7
+add.s $f3,$f3,$f6
+j out
+
+kelvin:
+la $a0,caracter
+li $v0,8
+syscall
+lbu $t4,($a0)
+j out
+
+fahrenheit:
+la $a0,caracter
+li $v0,8
+syscall
+lbu $t4,($a0)
+j out
+
+out:
+mov.s $f12,$f3
+li $v0,2
+syscall
+li $v0,10
+syscall
