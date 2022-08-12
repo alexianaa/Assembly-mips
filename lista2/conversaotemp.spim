@@ -2,8 +2,13 @@
 # t0 = temp atual
 caracter: .space 1
 doissetetres: .float 273.15
+menosdst: .float -273.15
 umoito: .float 1.8
 tresdois: .float 32.0
+menostd: .float -32.0
+cinco: .float 5.0
+nove: .float 9.0
+
 .text
 main:
 la $a0,caracter
@@ -53,6 +58,29 @@ la $a0,caracter
 li $v0,8
 syscall
 lbu $t4,($a0)
+
+li $t0,'C'
+li $t1,'F'
+
+li $v0,6
+syscall
+#f0 = temp atual
+
+beq $t4,$t0,kelvincelcius
+beq $t4,$t1,kelvinfahrenheit
+
+kelvincelcius:
+lwc1 $f6,menosdst
+add.s $f3,$f0,$f6
+j out
+
+kelvinfahrenheit:
+lwc1 $f6,tresdois
+lwc1 $f7,umoito
+lwc1 $f8,menosdst
+add.s $f3,$f0,$f8
+mul.s $f3,$f3,$f7
+add.s $f3,$f3,$f6 
 j out
 
 fahrenheit:
@@ -60,6 +88,33 @@ la $a0,caracter
 li $v0,8
 syscall
 lbu $t4,($a0)
+
+li $t0,'C'
+li $t1,'K'
+
+li $v0,6
+syscall
+#f0 = temp atual
+
+beq $t4,$t0,fahrenheitcelcius
+beq $t4,$t1,fahrenheitkelvin
+
+fahrenheitcelcius:
+lwc1 $f6,menostd
+lwc1 $f7,umoito
+add.s $f3,$f0,$f6
+div.s $f3,$f3,$f7
+j out
+
+fahrenheitkelvin:
+lwc1 $f6,menostd
+lwc1 $f7,cinco
+lwc1 $f8,nove
+lwc1 $f9,doissetetres
+add.s $f3,$f0,$f6
+mul.s $f3,$f3,$f7
+div.s $f3,$f3,$f8
+add.s $f3,$f3,$f9 
 j out
 
 out:
