@@ -1,0 +1,50 @@
+.data
+# preco final(f5) = soma do custo(f8) + porcentagem dos lucros(f1) + porcentagem dos impostos(f3)
+# f8 = soma do custo
+# t0 = porcentagem dos lucros
+# t1 = porcentagem dos impostos
+# f1 = calculo porcentagem dos lucros
+# f2 = int(t0) para double
+# f3 = calculo porcentagem dos impostos
+# f4 = int(t1) para double
+cem: .float 100.0
+.text
+main:
+# ler valor do custo em double
+li $v0,6
+syscall
+mov.s $f8,$f0
+
+# ler inteiro da porcentagem dos lucros
+li $v0,5
+syscall
+move $t0,$v0
+
+# ler inteiro da porcentagem dos impostos
+li $v0,5
+syscall
+move $t1,$v0
+
+# calcular porcentagem de lucro do custo: f8 * (t0/100)
+mtc1 $t0,$f2 # 20 -> 20.0
+cvt.s.w $f2,$f2
+lwc1 $f9,cem
+div.s $f2,$f2,$f9 # 20.0 / 100.0 
+mul.s $f1,$f8,$f2
+
+# calcular porcentagem de lucro dos impostos
+mtc1 $t1,$f4
+cvt.s.w $f4,$f4
+div.s $f4,$f4,$f9 
+mul.s $f3,$f8,$f4
+
+# somar tudo
+add.s $f5,$f0,$f1
+add.s $f5,$f5,$f3
+
+mov.s $f12,$f5
+li $v0,2
+syscall
+
+li $v0,10
+syscall

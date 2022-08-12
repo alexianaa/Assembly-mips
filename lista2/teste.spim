@@ -1,0 +1,12 @@
+.data
+cem: .double 100.0
+.text
+main:
+
+lwc1 $f1,cem
+li $v0,3
+mov.d $f12,$f1
+syscall
+
+li $v0,10
+syscall
